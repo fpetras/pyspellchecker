@@ -97,10 +97,10 @@ class SpellChecker(object):
                 gzipped (bool): Whether to gzip the dictionary or not '''
         data = json.dumps(self.word_frequency.dictionary, sort_keys=True)
         if gzipped:
-            with gzip.open(filepath, 'wt', encoding=encoding) as fobj:
+            with gzip.open(filepath, 'wt') as fobj:
                 fobj.write(data)
         else:
-            with open(filepath, 'w', encoding=encoding) as fobj:
+            with open(filepath, 'w') as fobj:
                 fobj.write(data)
 
     def word_probability(self, word, total_words=None):
@@ -324,10 +324,10 @@ class WordFrequency(object):
                 file to be loaded
                 encoding (str): The encoding of the dictionary '''
         try:
-            with gzip.open(filename, mode='rt', encoding=encoding) as fobj:
+            with gzip.open(filename, mode='rt') as fobj:
                 data = fobj.read().lower()
         except OSError:
-            with open(filename, mode='r', encoding=encoding) as fobj:
+            with open(filename, mode='r') as fobj:
                 data = fobj.read().lower()
         self._dictionary.update(json.loads(data, encoding=encoding))
         self._update_dictionary()
@@ -338,7 +338,7 @@ class WordFrequency(object):
             Args:
                 filename (str): The filepath to the text file to be loaded
                 encoding (str): The encoding of the text file '''
-        with open(filename, 'r', encoding=encoding) as fobj:
+        with open(filename, 'r') as fobj:
             self.load_text(fobj.read())
 
     def load_text(self, text):
